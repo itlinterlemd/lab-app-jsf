@@ -16,4 +16,4 @@
 --
 
 -- You can use this file to load seed data into the database using SQL statements
-insert into User (id, name, apellido, email, phone_number,password) values (0, 'John','Smith', 'john.smith@mailinator.com', '2125551212','1234') 
+insert into usuarios (id, name, apellido, email, phone_number,password) values (0, 'John','Smith', 'john.smith@mailinator.com', '2125551212','1234') 

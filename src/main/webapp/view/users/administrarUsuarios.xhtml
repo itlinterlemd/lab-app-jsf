@@ -44,10 +44,16 @@
                 requiredMessage="El campo Email es obligatorio."/>
                 <p:message for="email"/>
                 
+                <p:outputLabel for="password" value="Paswword:" />
+                <p:password id="password" required="true" 
+                requiredMessage="El campo Password es obligatorio."
+                    value="#{userController.newUser.password}" />
+                <p:message for="password"  /> 
+                
                 <p:outputLabel for="phoneNumber" value="Phone #:" />
                 <p:inputText id="phoneNumber" required="true" requiredMessage="El campo Phone es obligatorio."
                     value="#{userController.newUser.phoneNumber}" />
-                <p:message for="phoneNumber"  />       
+                <p:message for="phoneNumber"  />  
            
         </h:panelGrid>
         

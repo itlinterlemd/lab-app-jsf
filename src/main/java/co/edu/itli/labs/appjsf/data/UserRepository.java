@@ -16,13 +16,15 @@
  */
 package co.edu.itli.labs.appjsf.data;
 
+import java.util.List;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.List;
 
 import co.edu.itli.labs.appjsf.model.User;
 
@@ -45,6 +47,27 @@ public class UserRepository {
         // criteria.select(User).where(cb.equal(User.get(User_.name), email));
         criteria.select(User).where(cb.equal(User.get("email"), email));
         return em.createQuery(criteria).getSingleResult();
+    }
+    
+    public User findByEmailPassword(String email,String password) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<User> criteria = cb.createQuery(User.class);
+        Root<User> User = criteria.from(User.class);
+        // Swap criteria statements if you would like to try out type-safe criteria queries, a new
+        // feature in JPA 2.0
+        // criteria.select(User).where(cb.equal(User.get(User_.name), email));
+        criteria.select(User).
+        where(cb.equal(User.get("email"), email),
+        		cb.equal(User.get("password"), password));
+        User usr=null;
+    try {        	
+    	   usr=em.createQuery(criteria).getSingleResult();
+             	
+		} catch (NoResultException e) {
+			return null;
+		}
+        
+       return usr;
     }
 
     public List<User> findAllOrderedByName() {

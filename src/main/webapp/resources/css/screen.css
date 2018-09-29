@@ -200,3 +200,10 @@ input {
   color:#3883ce;
   text-decoration:none; 
 }
+
+.center {
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    padding: 10px;
+}

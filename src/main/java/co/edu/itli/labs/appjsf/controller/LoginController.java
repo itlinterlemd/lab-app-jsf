@@ -3,10 +3,12 @@ import java.io.Serializable;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
+import co.edu.itli.labs.appjsf.data.UserRepository;
+import co.edu.itli.labs.appjsf.model.User;
 import co.edu.itli.labs.appjsf.util.SessionUtils;
 
 
@@ -24,6 +26,10 @@ public class LoginController implements Serializable {
 	// Simple user database :)
 	private static final String[] users = {"admin:1234","user:1234"};
 	
+	
+    @Inject
+    private UserRepository UserRepo;
+    
 	private String username;
 	private String password;
 	
@@ -38,22 +44,20 @@ public class LoginController implements Serializable {
 	 */
 	public String doLogin() {
 		// Get every user from our sample database :)
-		for (String user: users) {
-			String dbUsername = user.split(":")[0];
-			String dbPassword = user.split(":")[1];
-			
+		
+	User user=	UserRepo.
+			findByEmailPassword(username, password);
 			// Successful login
-			if (dbUsername.equals(username) && dbPassword.equals(password)) {
+			if (user!=null) {
 				
 				SessionUtils.add("userlogued", username);//("userlogued"); 
 				
 				loggedIn = true;
 				return "view/home?faces-redirect=true";
 			}
-		}
 		
 		// Set login ERROR
-		FacesMessage msg = new FacesMessage("Login error!", "ERROR MSG");
+		FacesMessage msg = new FacesMessage("Login error. usuario o password no existe.", "ERROR MSG");
         msg.setSeverity(FacesMessage.SEVERITY_ERROR);
         FacesContext.getCurrentInstance().addMessage(null, msg);
 		

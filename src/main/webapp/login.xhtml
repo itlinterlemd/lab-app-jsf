@@ -19,6 +19,7 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
     template="/WEB-INF/templates/default.xhtml">
     <ui:define name="content">
         <h1>Welcome!</h1>
@@ -27,24 +28,36 @@
         <img src="resources/gfx/wildfly_400x130.jpg" />
             <p>You have successfully deployed a Java EE 7 Enterprise
                 Application.</p>
-            <h3>Login here</h3>
-            
+           
         </div>
-    	<h:form id="login-form">
-    	  <h:messages />
-    	   <h:outputText value="username:"/>
-    	   <h:inputText value="#{loginController.username}" id="username" required="true" requiredMessage="User Name Obligatorio:"/>
-    	   <br/>
-    	   <h:outputText value="password:"/>
-    	   <h:inputSecret value="#{loginController.password}" id="password" required="true" requiredMessage="Password Obligatorio:"/>
-    	   <br/>
-    	   <h:commandButton id="button" value="Login" action="#{loginController.doLogin}"/>
-    	   <br/>    	  
+       
+        <p:panel header="Login here" style="width:400px;">    	
+    	 <h:form id="login-form" style="border:0;">
+    	  <p:messages autoUpdate="true" />
+    	   
+    	 <h:panelGrid columns="2" cellpadding="3" cellspacing="3">
     	 
-    	   <br/>
-    	    <h:commandLink action="index?faces-redirect=true" value="Home page" immediate="true"/>       
+    	   <p:outputLabel value="User Name:" for="username"/>
+    	   <p:inputText value="#{loginController.username}" id="username" 
+    	   required="true" requiredMessage="User Name Obligatorio:"/>
+    	 
+    	   
+    	   <p:outputLabel value="Password:" for="password"/>
+    	   <p:password value="#{loginController.password}" id="password" 
+    	   required="true" requiredMessage="Password Obligatorio:"/>
+    	   
+    	   </h:panelGrid>
+    	   
+    	  <h:panelGroup style="float:right;">
+    	  <p:commandButton id="button" value="Login" 
+    	   action="#{loginController.doLogin}" process="@form "/>
+    	  </h:panelGroup>
+    	  </h:form>
+</p:panel>  
+ 
     	
-    	</h:form>      
+    	    <p:commandLink action="index?faces-redirect=true" value="Home page" immediate="true"/>       
+        
       
       
     </ui:define>
