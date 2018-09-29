@@ -27,6 +27,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import co.edu.itli.labs.appjsf.model.User;
+import co.edu.itli.labs.appjsf.util.HashTextUtils;
 
 @ApplicationScoped
 public class UserRepository {
@@ -58,7 +59,7 @@ public class UserRepository {
         // criteria.select(User).where(cb.equal(User.get(User_.name), email));
         criteria.select(User).
         where(cb.equal(User.get("email"), email),
-        		cb.equal(User.get("password"), password));
+        		cb.equal(User.get("password"), HashTextUtils.sha256(password)));
         User usr=null;
     try {        	
     	   usr=em.createQuery(criteria).getSingleResult();

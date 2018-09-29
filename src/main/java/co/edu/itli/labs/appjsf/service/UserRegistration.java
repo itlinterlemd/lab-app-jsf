@@ -17,6 +17,7 @@
 package co.edu.itli.labs.appjsf.service;
 
 import co.edu.itli.labs.appjsf.model.User;
+import co.edu.itli.labs.appjsf.util.HashTextUtils;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
@@ -40,6 +41,11 @@ public class UserRegistration {
 
     public void register(User User) throws Exception {
         log.info("Registering " + User.getName());
+        
+        String passEntradaWeb=User.getPassword();   
+        
+        User.setPassword(HashTextUtils.sha256(passEntradaWeb)); 
+        
         em.persist(User);
        // UserEventSrc.fire(User);
     }
@@ -51,6 +57,10 @@ public class UserRegistration {
      */
     public void actualizar(User user) throws Exception {
         log.info("Actualizando " + user.getName());
+        
+        String passEntradaWeb=user.getPassword();       
+        user.setPassword(HashTextUtils.sha256(passEntradaWeb));
+        
          em.merge(user);
         // UserEventSrc.fire(user);
     }
